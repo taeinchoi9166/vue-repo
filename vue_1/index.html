@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <style>
+        .my-enter-active, .my-leave-active{
+            transition: opacity .5s;
+        }
+
+        .my-enter, .my-leave-to{
+            opacity: 0;
+        }
+
+        .human-enter-active, .human-leave-active{
+            transition: all 0.5s;
+        }
+
+        .human-enter, .human-leave-to{
+            opacity: 0;
+            transform: translateX(-300px);
+        }
+
+        .human-leave-active{
+            position:absolute;
+        }
+
+        .human-move{
+            transition: transform 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+
+        <transition-group name="human" tag="ul">
+            <li v-for="item in list" :key="item.id">
+                {{item.name}}은 나이가 {{item.age}}
+            </li>
+        </transition-group>
+        <button @click="add" >추가</button>
+        <button @click="remove" >삭제</button>
+        <button @click="shuffle">셔플</button>
+<!--        <transition name="my">-->
+<!--            <template v-if="show">-->
+<!--                <p>안녕하세요 Vue인데스</p>-->
+<!--                <p>이번 강의 웅차웅차</p>-->
+<!--            </template>-->
+<!--        </transition>-->
+<!--        <button id="toggle" onclick="n()">클릭</button>-->
+    </div>
+    <script>
+        var i = 1;
+        function n(){
+            i = i == 0 ? 1 : 0
+            app.show = !i ? true : false;
+
+        }
+
+
+        let app = new Vue({
+            el:"#app",
+            data:{
+                msg:'Hello Vue.js',
+                //show:false,
+                list:[
+                    {id:1, name:'최선한', age:38},
+                    {id:2, name:'벌레씨', age:18},
+                    {id:3, name:'민영군', age:19},
+                    {id:4, name:'좌진현', age:19},
+                ]
+            },
+            methods:{
+                // remove:function () {
+                //
+                // } 아래꺼랑 같다.
+
+                add(){
+                  this.list.push({id:Math.max(...this.list.map((item)=>item.id))+1, name:"unknown", age:Math.floor(Math.random()*6)});
+                },
+                remove(){
+                    let rand = Math.floor(Math.random()*this.list.length);
+                    console.log(rand);
+                    this.list.splice(rand,1);
+                },
+                shuffle(){
+                    this.list = _.shuffle(this.list)
+                }
+            }
+        });
+
+        // document.querySelector("#remove").addEventListener("click",function(){
+        //    let rand = Math.floor(Math.random()*app.list.length);
+        //    console.log(rand);
+        //    app.list.splice(rand,1);
+        // });
+        //
+        // document.querySelector("#shuffle").addEventListener("click",function(){
+        //     app.list = _.shuffle(app.list)
+        // });
+    </script>
+</body>
+</html>

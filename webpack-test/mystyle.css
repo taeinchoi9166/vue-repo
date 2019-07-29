@@ -1,0 +1,18 @@
+h1{
+    color:red;
+    background:yellow;
+}
+
+div{
+    width:200px;
+    height:200px;
+    background-size: contain;
+}
+
+#back1{
+    background: url("./img/img1.jpg");
+}
+
+#back2{
+    background: url("./img/img2.jpg");
+}
