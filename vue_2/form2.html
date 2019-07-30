@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        input{
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!--    <label for="gondr">곤달니무</label>-->
+<!--    <input type="checkbox" id="gondr" v-model="checkList" value="gondr">-->
+<!--    <label for="yangdi">호에에</label>-->
+<!--    <input type="checkbox" id="yangdi" v-model="checkList" value="yangdi">-->
+<!--    <label for="soft">에엣</label>-->
+<!--    <input type="checkbox" id="soft" v-model="checkList" value="software">-->
+<!--    <p>{{checkList}}</p>-->
+
+    <form>
+        <transition name="id">
+           <div>
+               <span>아이디 :</span>
+               <input type="text" v-model="id">
+               <span v-if="errorId">아이디에러</span><br>
+           </div>
+        </transition>
+       이름 : <input type="text" v-model="name"><span v-if="errorName">이름오류</span><br>
+        <div>
+            취미 <br>
+            <label for="basket">농구</label>
+            <input type="checkbox" value="농구" v-model="checkList" id="basket">
+            <label for="foot">축구</label>
+            <input type="checkbox"  value="축구" v-model="checkList" id="foot">
+            <label for="base">야구</label>
+            <input type="checkbox" value="야구" v-model="checkList" id="base">
+        </div>
+        <span v-if="errorSelect">선택오류</span><br>
+        <button @click="submit" type="button">가입</button>
+    </form>
+</div>
+<script>
+    let app = new Vue({
+        el:"#app",
+        data:{
+            id:'',
+            name:'',
+           checkList:[],
+            errorId:false,
+            errorName:false,
+            errorSelect:false
+
+        },
+        methods:{
+            submit(){
+                const idExp = /^[A-Za-z][A-Za-z0-9]{4,}/;
+                const nameExp = /[가-힣]{3,5}/;
+
+                if(!idExp.test(this.id)){
+                    this.errorId = true;
+                }else{
+                    this.errorId = false;
+                }
+                if(!nameExp.test(this.name)){
+                    this.errorName = true;
+                }else{
+                    this.errorName = false;
+                }
+                if(this.checkList.length < 2){
+                    this.errorSelect = true;
+                }else{
+                    this.errorSelect = false;
+                }
+
+            }
+        },
+        computed:{
+
+        }
+    })
+</script>
+</body>
+</html>

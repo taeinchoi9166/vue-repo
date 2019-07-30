@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        input{
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!--   mustache문법의 특징
+1. 출력형식이 문자열로 나올수 있어야함
+2. 여러줄에 걸쳐쓰면 안됨.
+-->
+    <input type="text" v-model="myMsg">
+    <textarea v-model="myMsg" name="" id="" cols="30" rows="10">{{myMsg}}</textarea>
+    <input type="checkbox" v-model="checked">
+    <p>{{myMsg}}</p>
+    <span>{{value + 1}}</span>
+    <span v-html="combined"></span>
+    <a v-bind:href="link">sproutseed</a>
+</div>
+<script>
+    //Vue.config.keyCodes.meta = 17;
+    //키코드 설정 버튼
+    let app = new Vue({
+        el:"#app",
+        data:{
+            myMsg:'',
+            checked:false,
+            msg:'<span style="color:red">Hi</span>Word',
+            link:"http://www.sproutseed.ga",
+            value:1
+        },
+        methods:{
+
+        },
+        computed:{
+            combined(){
+                return "메시지 : "+this.msg;
+            }
+        }
+    })
+</script>
+</body>
+</html>

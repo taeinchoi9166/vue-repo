@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{cnt}}</p>
+    <p>{{msg}}</p>
+    <button @click.once="inc(2, '대노루', $event)">증가</button>  <!-- 한번 실행시키면 이 이벤트를 실행 못시킨다. -->
+    <a href="http://www.sproutseed.ga" @click.prevent="link">Sproutseed</a>
+<!--   이벤트 안에 수식을 넣는것도 가능 -->
+</div>
+<script>
+    //
+    let app = new Vue({
+        el:"#app",
+        data:{
+            cnt:0,
+            msg:''
+        },
+        methods:{
+            link(){
+              console.log("링크 클릭")
+            },
+            inc(value, msg, e){
+                // this.cnt += value;
+                // this.msg += msg;
+                // console.log(event);
+                console.log(e);
+            }
+        }
+    })
+</script>
+</body>
+</html>

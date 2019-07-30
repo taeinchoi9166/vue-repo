@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        .outer{
+            width:200px;
+            background: red;
+        }
+        .inner{
+            width:100px;
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+   <div @click="doTop" class="outer">
+       <div class="inner" @click.self.stop="doMiddle">
+           <button @click="doLast" @contextmenu.prevent="doLast">이벤트.</button>
+       </div>
+   </div>
+    <input type="text" @keyup.exact.meta.enter="submit">
+<!--    tab, delete, esc, space, up,down left, right-->
+</div>
+<script>
+    //Vue.config.keyCodes.meta = 17;
+    //키코드 설정 버튼
+    let app = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+            doTop(){
+                console.log('적색 div 이벤트')
+            },
+            doMiddle(){
+                console.log('파랑 div 이벤트')
+            },
+            doLast(){
+                console.log('버튼 이벤트')
+            },
+            submit(){
+                console.log("submit");
+            }
+        }
+    })
+</script>
+</body>
+</html>

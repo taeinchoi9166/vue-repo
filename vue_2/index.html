@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <template v-if="toggleCnt === 1">
+            <li v-for="item in filterList">
+                {{item.name}}은 나이가  {{item.age}}입니다.
+            </li>
+        </template>
+        <template v-if="toggleCnt === 0">
+            <li v-for="item in list">
+                {{item.name}}은 나이가  {{item.age}}입니다.
+            </li>
+        </template>
+    </ul>
+    <button @click="toggle">버튼</button>
+</div>
+    <script>
+        let app = new Vue({
+            el:"#app",
+            data:{
+                list:[
+                    {id:1,name:'곤달님',age:38},
+                    {id:2,name:'문원이',age:17},
+                    {id:4,name:'민영이',age:19},
+                    {id:5,name:'현진좌',age:31}
+                ],
+                toggleCnt:0,
+                age:18
+            },
+            methods:{
+                toggle(){
+                    this.toggleCnt++;
+                    if(this.toggleCnt === 2){
+                        this.toggleCnt = 0;
+                    }
+                }
+            },
+            computed:{
+                filterList(){
+                    return this.list.filter(x =>  x.age >= this.age);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

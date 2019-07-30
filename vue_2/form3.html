@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+    </style>
+</head>
+<body>
+<div id="app">
+    <label for="one">one</label>
+    <input type="radio" value="one" v-model="picked" id="one">
+    <label for="two">two</label>
+    <input type="radio" value="two" v-model="picked" id="two">
+    <br>
+    <span>선택 : {{picked}}</span>
+
+    <select v-model="selected">
+        <option v-for="item in list" :value="item.value">{{item.name}}</option>
+    </select>
+
+    <span>선택 : {{selected}}</span>
+
+    <input type="number" v-model.number="age" @input="print">
+</div>
+<script>
+    let app = new Vue({
+        el:"#app",
+        data:{
+            age:0,
+            picked:null,
+            selected:null,
+            list:[
+                {value:'javascript',name:'자스'},
+                {value:'vue.js',name:'뷰'},
+                {value:'react.js',name:'리엑트'}
+            ]
+        },
+        methods:{
+            print() {
+                console.log(this.age);
+            }
+        },
+        computed:{
+
+        }
+    })
+</script>
+</body>
+</html>

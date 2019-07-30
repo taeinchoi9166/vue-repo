@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        .active{
+            background-color: rgba(0,255,230,0.7);
+        }
+        .text-danger{
+            color:red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+   <div :class="objClass" class="red">액티브 클래스</div>
+    <button @click="doActive">do</button>
+</div>
+<script>
+    let app = new Vue({
+        el:"#app",
+        data:{
+           isActive:false,
+            isError:false
+        },
+        methods:{
+            doActive(){
+                this.isActive = !this.isActive;
+                this.isError = !this.isError;
+            }
+        },
+        computed:{
+            objClass(){
+                return {active:this.isActive, 'text-danger':this.isError}
+            }
+        }
+    })
+</script>
+</body>
+</html>
