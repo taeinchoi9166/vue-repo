@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        *{
+            margin:0 auto;
+            padding:0;
+            box-sizing: border-box;
+        }
+        .container{
+            width:100%;
+            border:1px solid #555;
+            border-radius: 1rem;
+        }
+
+        .item{
+            height:80px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+        }
+
+        .item > .title{
+            font-size: 30px;
+            color:rgba(0,0,255,0.8);
+        }
+
+        .item > .desc{
+            margin-top:10px;
+            color:#777;
+        }
+
+        .myForm{
+            width:600px;
+            height:50px;
+            margin:10px;
+        }
+        .myForm > *{
+            float:left;
+        }
+        .myForm input, .myForm textarea{
+            width:40%;
+            height:100%;
+            resize:none;
+            border: none;
+            background: #eee;
+            margin-right:5%;
+            font-size:1.5rem;
+        }
+        .myForm > button{
+            width:10%;
+            height: 100%;
+            background: #333;
+            color:#eee;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .items-enter, .items-leave-to{
+            opacity: 0;
+        }
+        .items-active-enter, .items-active-leave{
+            transition: 0.5s;
+            transform: translateX(-200px);
+        }
+
+        .items-leave-active{
+            position: absolute;
+        }
+
+        .items-move{
+            transition: 0.4s;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>컴포넌트 테스트입니다.</h1>
+<!--    <my-compo></my-compo>-->
+<!--    <my-compo></my-compo>-->
+
+<!--    <table>-->
+<!--        <tr is="my-row"></tr>-->
+<!--        <tr is="my-row"></tr>-->
+<!--        <tr is="my-row"></tr>-->
+<!--    </table>-->
+
+    <div class="container">
+        <transition-group name="items" tag="div">
+            <child :data="item" :key="item.id" v-for="item in list" @del="del(item.id)"></child>
+        </transition-group>
+       </div>
+    <div @keyup.ctrl.enter="inputForm" class="myForm">
+        <input type="text" v-model="title">
+        <textarea name="" id="" cols="30" rows="10" v-model="content" ></textarea>
+        <button  @click="inputForm">입력</button>
+    </div>
+
+    <simple-counter></simple-counter>
+    <simple-counter></simple-counter>
+
+</div>
+<!--<div id="app2">-->
+<!--    <h2>이녀석은 앱2</h2>-->
+<!--    <my-compo></my-compo>-->
+<!--</div>-->
+<script>
+    // Vue.component('my-compo',{
+    //     template:`<div><a href="https://www.sproutseed.ga">링크</a></div>`
+    // });
+
+    // Vue.component('my-row',{
+    //     template:`<tr><td>열1</td><td>열2</td><td>열3</td></tr>`
+    // })
+
+    Vue.component('simple-counter',{
+        template: `<button @click="cnt += 1">{{cnt}}</button>`,
+        data(){
+            return {cnt:0} //컴포넌트 밖에서 변수 선언을 데이터로 반환시 다른 컴포넌트가 그 변수를 참조해 공유하게 된다.
+        }
+    });
+
+    Vue.component('child',{
+       props:['data'],
+        methods:{
+           del(){
+               this.$emit("del")
+           }
+        },
+       template:
+           `<div class="item">
+                <h1 class="title">{{data.title}}</h1>
+                <p class="desc">{{data.desc}}</p>
+                <button @click="del">삭제!</button>
+            </div>`
+    });
+
+    let app = new Vue({
+        el:'#app',
+        data:{
+            list:[
+                {id:1,title:'자연을 위하여', desc:'contente'},
+                {id:2,title:'자연이 그대를 거부하리라', desc:'contentsd'},
+                {id:3,title:'음, 잘했네',desc:'내뇽ㅇ어어'}
+            ],
+            title:'',
+            content:'',
+            nextId:4
+        },
+        methods:{
+            inputForm(){
+                if(this.title.trim().length > 0 && this.content.trim().length > 0){
+                    this.list.push({id:this.nextId,title:this.title,desc:this.content});
+                    this.nextId++;
+                }else{
+                    alert('아이고! 입력 창 중 하나가 빈거 같네요!');
+                }
+            },
+            del(id){
+                console.log(id);
+                let index =  this.list.findIndex(item => item.id = id);
+                this.list.splice(index,1);
+            }
+
+        }
+        // components:{
+        //     'my-compo':{
+        //         template:`<div><a href="https://www.sproutseed.ga">링크</a></div>`
+        //     }
+        // }
+        // created : vue 라이프 사이클에서 뷰 앱이 생성 되었을시 실행
+
+    })
+
+    // let app2 = new Vue({
+    //     el:'#app2'
+    // })
+</script>
+</body>
+</html>
